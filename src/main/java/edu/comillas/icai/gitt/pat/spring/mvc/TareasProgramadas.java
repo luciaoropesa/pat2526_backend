@@ -5,6 +5,7 @@ package edu.comillas.icai.gitt.pat.spring.mvc;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -15,6 +16,7 @@ import org.springframework.web.client.RestTemplate;
 public class TareasProgramadas {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private String respuesta_ant;
+    @Value("${url}") private String url;
     @Scheduled(fixedRate = 300000)
     public void ritmoFijo() {
         logger.info("Me ejecuto cada 5 minutos");
@@ -28,14 +30,14 @@ public class TareasProgramadas {
     @Scheduled(fixedRate = 60000)
     public void consultarAPI() {
         //hola
-        logger.info("La url es: https://xkcd.com/info.0.json");
+        logger.info("La url es: "+url);
         try {
             HttpHeaders headers = new HttpHeaders();
             //headers.set("Cabecera", "Valor");
             //RestTemplate restTemplate=new RestTemplate();
 
             ResponseEntity<String> response = new RestTemplate().exchange(
-                    "https://xkcd.com/info.0.json", HttpMethod.GET,
+                    url, HttpMethod.GET,
                     new HttpEntity<>(headers),
                     String.class
             );
