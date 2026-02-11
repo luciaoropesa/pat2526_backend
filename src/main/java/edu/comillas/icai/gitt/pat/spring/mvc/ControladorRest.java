@@ -45,6 +45,7 @@ public class ControladorRest {
     public ModeloContador contador(@PathVariable String nombre) {
         if (contadores.get(nombre)== null) {
             // Si no existe
+            logger.info("Contador no encontrado");
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         return contadores.get(nombre);
